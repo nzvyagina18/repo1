@@ -1,2 +1,3 @@
 # repo1
-qa automation training
+# repository for Python training
+
