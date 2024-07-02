@@ -8,11 +8,6 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
-#options = Options()
-#options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
-#driver = webdriver.Firefox(executable_path=r'C:\Users\nadya\PycharmProjects\repo1\geckodriver.exe', options=options)
-#driver.get('http://google.com/')
-
 class UntitledTestCase(unittest.TestCase):
     def setUp(self):
         options = Options()
@@ -43,7 +38,6 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_name("submit").click()
         wd.find_element_by_link_text("groups").click()
         wd.find_element_by_link_text("Logout").click()
-        print('Hello world!')
 
     def is_element_present(self, how, what):
         try:
