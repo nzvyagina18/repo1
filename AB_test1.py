@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
@@ -7,10 +8,16 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
+#options = Options()
+#options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
+#driver = webdriver.Firefox(executable_path=r'C:\Users\nadya\PycharmProjects\repo1\geckodriver.exe', options=options)
+#driver.get('http://google.com/')
 
 class UntitledTestCase(unittest.TestCase):
     def setUp(self):
-        self.wd = webdriver.Firefox()
+        options = Options()
+        options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
+        self.wd = webdriver.Firefox(executable_path=r'C:\Users\nadya\PycharmProjects\repo1\geckodriver.exe', options=options)
         self.wd.implicitly_wait(30)
 
     def test_untitled_test_case(self):
@@ -36,6 +43,7 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_name("submit").click()
         wd.find_element_by_link_text("groups").click()
         wd.find_element_by_link_text("Logout").click()
+        print('Hello world!')
 
     def is_element_present(self, how, what):
         try:
