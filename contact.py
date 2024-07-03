@@ -1,6 +1,7 @@
+from contact_date import ContactDate
 class Contact:
     def __init__(self, firstname, nickname, lastname, midname, title, company, address, homephone, mobilephone,
-                    workphone, fax, email1, email2, email3, homepage):
+                    workphone, fax, email1, email2, email3, homepage, birthdate, ann_date):
         self.firstname = firstname
         self.nickname = nickname
         self.lastname = lastname
@@ -16,3 +17,5 @@ class Contact:
         self.email2 = email2
         self.email3 = email3
         self.homepage = homepage
+        self.birthdate = birthdate
+        self.ann_date = ann_date

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from contact_date import ContactDate
 class ContactPage:
     def __init__(self):
         self.firstname = 'firstname'
@@ -15,14 +17,8 @@ class ContactPage:
         self.email2 = 'email2'
         self.email3 = 'email3'
         self.homepage = 'homepage'
-        #class Date:
-        #    def __init__(self, day, month, year):
-        #        self.day = day
-        #        self.month = month
-        #        self.year = year
-
-        #self.bdate = Date("bday", "bmonth", "byear")
-        #self.andate = Date("aday", "amonth", "ayear")
+        self.birthdate = ContactDate("bday", "bmonth", "byear")
+        self.ann_date = ContactDate("aday", "amonth", "ayear")
 
 
 
