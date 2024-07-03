@@ -5,6 +5,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
+from contact import Contact
 
 class UntitledTestCase(unittest.TestCase):
     def setUp(self):
@@ -18,32 +19,30 @@ class UntitledTestCase(unittest.TestCase):
         wd = self.wd
         self.OpenHomePage(wd)
         self.Login(wd, "admin", "secret")
-        self.add_contact(wd)
+        self.add_contact(wd, Contact("Contact1", "Contact1_nick", "Contact1_last", "Contact1_mid", "Contact1_title",
+                         "Contact1_company", "Contact1 address", "2222222", "+79212222222", "+79112222222", "2222222",
+                         "contact1@email1.ru", "contact1@email2.ru", "contact1@email3.ru", "http://mail.ru"))
         self.Logout(wd)
 
-    def add_contact(self, wd, firstname="Contact1", midname="Contact1_mid", lastname="Contact1_last",
-                    nickname="Contact1_nick", title="Contact1_title", company="Contact1_company",
-                    address="Contact1 address", homephone="2222222", mobilephone="+79212222222", workphone="+79112222222",
-                    fax="2222222", email1="contact1@email1.ru", email2="contact1@email2.ru", email3="contact1@email3.ru",
-                    homepage="http://mail.ru"):
+    def add_contact(self, wd, Contact):
         wd.find_element_by_id("container").click()
         wd.find_element_by_link_text("add new").click()
-        self.populate(wd, 'firstname', firstname)
-        self.populate(wd, 'middlename', midname)
+        self.populate(wd, 'firstname', Contact.firstname)
+        self.populate(wd, 'middlename', Contact.midname)
         wd.find_element_by_name("theform").click()
-        self.populate(wd, 'lastname', lastname)
-        self.populate(wd, 'nickname', nickname)
-        self.populate(wd, 'title', title)
-        self.populate(wd, 'company', company)
-        self.populate(wd, 'address', address)
-        self.populate(wd, 'home', homephone)
-        self.populate(wd, 'mobile', mobilephone)
-        self.populate(wd, 'work', workphone)
-        self.populate(wd, 'fax', fax)
-        self.populate(wd, 'email', email1)
-        self.populate(wd, 'email2', email2)
-        self.populate(wd, 'email3', email3)
-        self.populate(wd, 'homepage', homepage)
+        self.populate(wd, 'lastname', Contact.lastname)
+        self.populate(wd, 'nickname', Contact.nickname)
+        self.populate(wd, 'title', Contact.title)
+        self.populate(wd, 'company', Contact.company)
+        self.populate(wd, 'address', Contact.address)
+        self.populate(wd, 'home', Contact.homephone)
+        self.populate(wd, 'mobile', Contact.mobilephone)
+        self.populate(wd, 'work', Contact.workphone)
+        self.populate(wd, 'fax', Contact.fax)
+        self.populate(wd, 'email', Contact.email1)
+        self.populate(wd, 'email2', Contact.email2)
+        self.populate(wd, 'email3', Contact.email3)
+        self.populate(wd, 'homepage', Contact.homepage)
         self.set_birthdate(wd)
         self.set_anniversary(wd)
         #submit form
@@ -124,9 +123,7 @@ class UntitledTestCase(unittest.TestCase):
             self.accept_next_alert = True
 
     def tearDown(self):
-        self.driver.quit()
-        self.assertEqual([], self.verificationErrors)
-
+        self.wd.quit()
 
 if __name__ == "__main__":
     unittest.main()
