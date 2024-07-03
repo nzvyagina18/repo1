@@ -6,7 +6,6 @@ from selenium.common.exceptions import NoAlertPresentException
 import unittest
 from group import Group
 
-
 class UntitledTestCase(unittest.TestCase):
     def setUp(self):
         options = Options()
