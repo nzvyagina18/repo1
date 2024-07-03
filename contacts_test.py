@@ -6,6 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
 from contact import Contact
+from contact_page import ContactPage
 
 class UntitledTestCase(unittest.TestCase):
     def setUp(self):
@@ -25,24 +26,24 @@ class UntitledTestCase(unittest.TestCase):
         self.Logout(wd)
 
     def add_contact(self, wd, Contact):
+        page = ContactPage()
         wd.find_element_by_id("container").click()
         wd.find_element_by_link_text("add new").click()
-        self.populate(wd, 'firstname', Contact.firstname)
-        self.populate(wd, 'middlename', Contact.midname)
-        wd.find_element_by_name("theform").click()
-        self.populate(wd, 'lastname', Contact.lastname)
-        self.populate(wd, 'nickname', Contact.nickname)
-        self.populate(wd, 'title', Contact.title)
-        self.populate(wd, 'company', Contact.company)
-        self.populate(wd, 'address', Contact.address)
-        self.populate(wd, 'home', Contact.homephone)
-        self.populate(wd, 'mobile', Contact.mobilephone)
-        self.populate(wd, 'work', Contact.workphone)
-        self.populate(wd, 'fax', Contact.fax)
-        self.populate(wd, 'email', Contact.email1)
-        self.populate(wd, 'email2', Contact.email2)
-        self.populate(wd, 'email3', Contact.email3)
-        self.populate(wd, 'homepage', Contact.homepage)
+        self.populate(wd, page.firstname, Contact.firstname)
+        self.populate(wd, page.midname, Contact.midname)
+        self.populate(wd, page.lastname, Contact.lastname)
+        self.populate(wd, page.nickname, Contact.nickname)
+        self.populate(wd, page.title, Contact.title)
+        self.populate(wd, page.company, Contact.company)
+        self.populate(wd, page.address, Contact.address)
+        self.populate(wd, page.homephone, Contact.homephone)
+        self.populate(wd, page.mobilephone, Contact.mobilephone)
+        self.populate(wd, page.workphone, Contact.workphone)
+        self.populate(wd, page.fax, Contact.fax)
+        self.populate(wd, page.email1, Contact.email1)
+        self.populate(wd, page.email2, Contact.email2)
+        self.populate(wd, page.email3, Contact.email3)
+        self.populate(wd, page.homepage, Contact.homepage)
         self.set_birthdate(wd)
         self.set_anniversary(wd)
         #submit form
@@ -63,10 +64,8 @@ class UntitledTestCase(unittest.TestCase):
     def set_anniversary(self, wd):
         wd.find_element_by_name("aday").click()
         Select(wd.find_element_by_name("aday")).select_by_visible_text("11")
-        wd.find_element_by_xpath("//div[@id='content']/form/select[3]/option[13]").click()
         wd.find_element_by_name("amonth").click()
         Select(wd.find_element_by_name("amonth")).select_by_visible_text("June")
-        wd.find_element_by_xpath("//div[@id='content']/form/select[4]/option[7]").click()
         wd.find_element_by_name("ayear").click()
         wd.find_element_by_name("ayear").clear()
         wd.find_element_by_name("ayear").send_keys("2030")
@@ -74,10 +73,8 @@ class UntitledTestCase(unittest.TestCase):
     def set_birthdate(self, wd):
         wd.find_element_by_name("bday").click()
         Select(wd.find_element_by_name("bday")).select_by_visible_text("11")
-        wd.find_element_by_xpath("//option[@value='11']").click()
         wd.find_element_by_name("bmonth").click()
         Select(wd.find_element_by_name("bmonth")).select_by_visible_text("June")
-        wd.find_element_by_xpath("//option[@value='June']").click()
         wd.find_element_by_name("byear").click()
         wd.find_element_by_name("byear").clear()
         wd.find_element_by_name("byear").send_keys("2000")
