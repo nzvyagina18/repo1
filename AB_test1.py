@@ -17,27 +17,23 @@ class UntitledTestCase(unittest.TestCase):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, "admin", "secret")
-        self.open_groups_page(wd)
         self.create_group(wd, Group("aaa", "bbb", "ccc"))
-        self.return_to_groups_page(wd)
         self.logout(wd)
 
     def test_create_empty_group(self):
         wd = self.wd
         self.open_home_page(wd)
         self.login(wd, "admin", "secret")
-        self.open_groups_page(wd)
         self.create_group(wd, Group("", "", ""))
-        self.return_to_groups_page(wd)
         self.logout(wd)
 
     def logout(self, wd):
         wd.find_element_by_link_text("Logout").click()
 
-    def return_to_groups_page(self, wd):
-        wd.find_element_by_link_text("groups").click()
-
     def create_group(self, wd, group):
+        # Open Groups page
+        wd.find_element_by_id("container").click()
+        wd.find_element_by_link_text("groups").click()
         # initiate group creation
         wd.find_element_by_name("new").click()
         # fill in group form
@@ -52,9 +48,7 @@ class UntitledTestCase(unittest.TestCase):
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         # submit form
         wd.find_element_by_name("submit").click()
-
-    def open_groups_page(self, wd):
-        wd.find_element_by_id("container").click()
+        # return to groups page
         wd.find_element_by_link_text("groups").click()
 
     def login(self, wd, user, password):
