@@ -19,12 +19,12 @@ class UntitledTestCase(unittest.TestCase):
 
     def test_add_contact(self):
         wd = self.wd
-        self.OpenHomePage(wd)
-        self.Login(wd, "admin", "secret")
+        self.open_home_page(wd)
+        self.login(wd, "admin", "secret")
         self.add_contact(wd, Contact("Contact1", "Contact1_nick", "Contact1_last", "Contact1_mid", "Contact1_title",
                          "Contact1_company", "Contact1 address", "2222222", "+79212222222", "+79112222222", "2222222",
                          "contact1@email1.ru", "contact1@email2.ru", "contact1@email3.ru", "http://mail.ru", ContactDate("11", "June", "2000"), ContactDate("11", "June", "2020") ), ContactPage())
-        self.Logout(wd)
+        self.logout(wd)
 
     def add_contact(self, wd, Contact, ContactPage):
         wd.find_element_by_id("container").click()
@@ -70,17 +70,17 @@ class UntitledTestCase(unittest.TestCase):
 
 
     #all the staff below + setUp method should be moved to address_book_lib.py but currently I do not know how)
-    def Login(self, wd, admin, secret):
+    def login(self, wd, admin, secret):
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(admin)
         wd.find_element_by_name("pass").clear()
         wd.find_element_by_name("pass").send_keys(secret)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
-    def Logout(self, wd):
+    def logout(self, wd):
         wd.find_element_by_link_text("Logout").click()
 
-    def OpenHomePage(self, wd):
+    def open_home_page(self, wd):
         wd.get("http://localhost/addressbook/")
 
     def is_element_present(self, how, what):
