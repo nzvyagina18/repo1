@@ -28,6 +28,6 @@ def test_del_from_home(a_b):
 
 def test_del_from_edit(a_b):
     a_b.session.login("admin", "secret")
-    a_b.contact.delete_from_edit('Contact1')
+    a_b.contact.delete_from_edit('contact_03')
     a_b.session.logout()
 

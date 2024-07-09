@@ -51,7 +51,7 @@ class ContactHelper:
 
     def edit(self, contact_name, contact_new, contact_page):
         wd = self.ab.wd
-        checkbox = '//input [@name="selected[]" and contains(@title,"' + contact_name + '")]'
+        checkbox = '//input [contains(@title,"' + contact_name + '")]'
         contact_id = wd.find_element_by_xpath(checkbox).get_attribute("id")
         edit_button = '//a[@href = "edit.php?id=' + contact_id + '"]/img'
         wd.find_element_by_xpath(edit_button).click()
@@ -78,7 +78,7 @@ class ContactHelper:
 
     def delete_from_edit(self, contact_name):
         wd = self.ab.wd
-        checkbox = '//input [@name="selected[]" and contains(@title,"' + contact_name + '")]'
+        checkbox = '//input [contains(@title,"' + contact_name + '")]'
         contact_id = wd.find_element_by_xpath(checkbox).get_attribute("id")
         edit_button = '//a[@href = "edit.php?id=' + contact_id + '"]/img'
         wd.find_element_by_xpath(edit_button).click()
@@ -87,7 +87,7 @@ class ContactHelper:
 
     def delete_from_home(self, contact_name):
         wd = self.ab.wd
-        checkbox = '//input [@name="selected[]" and contains(@title,"' + contact_name + '")]'
+        checkbox = '//input [contains(@title,"' + contact_name + '")]'
         wd.find_element_by_xpath(checkbox).click()
         wd.find_element_by_xpath('//input[@value = "Delete"]').click()
 
