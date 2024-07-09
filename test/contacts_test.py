@@ -1,16 +1,7 @@
 # -*- coding: utf-8 -*-
-import pytest
 from model.contact import Contact
 from model.contact_page import ContactPage
 from model.contact_date import ContactDate
-from fixture.address_book_lib import AddressBook
-
-
-@pytest.fixture
-def a_b(request):
-    fixture = AddressBook()
-    request.addfinalizer(fixture.destroy)
-    return fixture
 
 
 def test_add_contact(a_b):
