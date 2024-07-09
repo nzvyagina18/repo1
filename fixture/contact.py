@@ -48,3 +48,4 @@ class ContactHelper:
         self.set_date(contact_page.ann_date, contact.ann_date)
         # submit form
         wd.find_element_by_name("submit").click()
+        wd.find_element_by_link_text("groups").click()
