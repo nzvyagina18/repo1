@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-from group import Group
-from address_book_lib import AddressBook
+from model.group import Group
+from fixture.address_book_lib import AddressBook
 
 
 @pytest.fixture

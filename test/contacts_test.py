@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import pytest
-from contact import Contact
-from contact_page import ContactPage
-from contact_date import ContactDate
-from address_book_lib import AddressBook
+from model.contact import Contact
+from model.contact_page import ContactPage
+from model.contact_date import ContactDate
+from fixture.address_book_lib import AddressBook
 
 
 @pytest.fixture

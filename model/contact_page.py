@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from contact_date import ContactDate
+from model.contact_date import ContactDate
 class ContactPage:
     def __init__(self):
         self.firstname = 'firstname'

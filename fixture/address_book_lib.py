@@ -8,8 +8,8 @@ class AddressBook:
     def __init__(self):
         options = Options()
         options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
-        self.wd = webdriver.Firefox(executable_path=r'C:\Users\nadya\PycharmProjects\repo1\geckodriver.exe',
-                                        options=options)
+        self.wd = webdriver.Firefox(executable_path=r'/geckodriver.exe',
+                                    options=options)
         self.wd.implicitly_wait(30)
 
     def open_home_page(self):
