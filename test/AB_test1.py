@@ -13,11 +13,11 @@ def a_b(request):
 
 def test_create_group(a_b):
     a_b.session.login( "admin", "secret")
-    a_b.create_group(Group("aaa", "bbb", "ccc"))
+    a_b.group.create(Group("aaa", "bbb", "ccc"))
     a_b.session.logout()
 
 
 def test_create_empty_group(a_b):
     a_b.session.login("admin", "secret")
-    a_b.create_group(Group("", "", ""))
+    a_b.group.create(Group("", "", ""))
     a_b.session.logout()
