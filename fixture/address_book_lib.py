@@ -2,28 +2,21 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.ui import Select
+from fixture.session import SessionHelper
 
 
 class AddressBook:
     def __init__(self):
         options = Options()
         options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
-        self.wd = webdriver.Firefox(executable_path=r'/geckodriver.exe',
+        self.wd = webdriver.Firefox(executable_path=r'geckodriver.exe',
                                     options=options)
         self.wd.implicitly_wait(30)
+        self.session = SessionHelper(self)
 
     def open_home_page(self):
         wd = self.wd
         wd.get("http://localhost/addressbook/")
-
-    def login(self, user, password):
-        wd = self.wd
-        self.open_home_page()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(user)
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_xpath("//input[@value='Login']").click()
 
     def open_groups_page(self):
         wd = self.wd
@@ -34,9 +27,6 @@ class AddressBook:
         wd = self.wd
         wd.find_element_by_link_text("groups").click()
 
-    def logout(self):
-        wd = self.wd
-        wd.find_element_by_link_text("Logout").click()
 
     def create_group(self, group):
         # Open Groups page

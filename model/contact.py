@@ -1,4 +1,3 @@
-from contact_date import ContactDate
 class Contact:
     def __init__(self, firstname, nickname, lastname, midname, title, company, address, homephone, mobilephone,
                     workphone, fax, email1, email2, email3, homepage, birthdate, ann_date):
@@ -9,7 +8,7 @@ class Contact:
         self.title = title
         self.company = company
         self.address = address
-        self.homephone = homepage
+        self.homephone = homephone
         self.mobilephone = mobilephone
         self.workphone = workphone
         self.fax = fax,
