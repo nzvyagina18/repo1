@@ -35,6 +35,9 @@ class ContactHelper:
         wd.find_element_by_id("container").click()
         wd.find_element_by_link_text("add new").click()
         self.populate_contact_data(contact, contact_page)
+        self.submit_form(wd)
+
+    def submit_form(self, wd):
         # submit form
         wd.find_element_by_name("submit").click()
 
