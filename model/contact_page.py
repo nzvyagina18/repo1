@@ -12,7 +12,7 @@ class ContactPage:
         self.homephone = 'home'
         self.mobilephone = 'mobile'
         self.workphone = 'work'
-        self.fax = 'fax',
+        self.fax_ = 'fax',
         self.email1 = 'email'
         self.email2 = 'email2'
         self.email3 = 'email3'

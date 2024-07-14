@@ -81,3 +81,16 @@ class GroupHelper:
         checkbox = '//input [@name="selected[]" and contains(@title,"' + group_name + '")]'
         wd.find_element_by_xpath(checkbox).click()
 
+    def count(self):
+        wd = self.ab.wd
+        self.open_groups_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
+    def exists(self, group_name):
+        wd = self.ab.wd
+        self.open_groups_page()
+        checkbox = '//input [@name="selected[]" and contains(@title,"' + group_name + '")]'
+        return len(wd.find_elements_by_xpath(checkbox))
+
+
+

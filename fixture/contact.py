@@ -12,23 +12,26 @@ class ContactHelper:
 
     def populate(self, fieldname, value):
         wd = self.ab.wd
-        wd.find_element_by_name(fieldname).click()
-        wd.find_element_by_name(fieldname).clear()
-        wd.find_element_by_name(fieldname).send_keys(value)
+        if value is not None:
+            wd.find_element_by_name(fieldname).click()
+            wd.find_element_by_name(fieldname).clear()
+            wd.find_element_by_name(fieldname).send_keys(value)
 
     def upload_photo(self, path):
         wd = self.ab.wd
-        wd.find_element_by_name("photo").send_keys(path)
+        if path is not None:
+            wd.find_element_by_name("photo").send_keys(path)
 
     def set_date(self, date_control, date_value):
         wd = self.ab.wd
-        wd.find_element_by_name(date_control.day).click()
-        Select(wd.find_element_by_name(date_control.day)).select_by_visible_text(date_value.day)
-        wd.find_element_by_name(date_control.month).click()
-        Select(wd.find_element_by_name(date_control.month)).select_by_visible_text(date_value.month)
-        wd.find_element_by_name(date_control.year).click()
-        wd.find_element_by_name(date_control.year).clear()
-        wd.find_element_by_name(date_control.year).send_keys(date_value.year)
+        if date_value is not None:
+            wd.find_element_by_name(date_control.day).click()
+            Select(wd.find_element_by_name(date_control.day)).select_by_visible_text(date_value.day)
+            wd.find_element_by_name(date_control.month).click()
+            Select(wd.find_element_by_name(date_control.month)).select_by_visible_text(date_value.month)
+            wd.find_element_by_name(date_control.year).click()
+            wd.find_element_by_name(date_control.year).clear()
+            wd.find_element_by_name(date_control.year).send_keys(date_value.year)
 
     def add(self, contact, contact_page):
         wd = self.ab.wd
@@ -56,7 +59,7 @@ class ContactHelper:
         self.populate(contact_page.homephone, contact.homephone)
         self.populate(contact_page.mobilephone, contact.mobilephone)
         self.populate(contact_page.workphone, contact.workphone)
-        self.populate(contact_page.fax, contact.fax)
+        self.populate(contact_page.fax_, contact.fax_)
         self.populate(contact_page.email1, contact.email1)
         self.populate(contact_page.email2, contact.email2)
         self.populate(contact_page.email3, contact.email3)
@@ -74,7 +77,7 @@ class ContactHelper:
         self.open_contact_page()
 
     def edit_contact(self, contact_name, wd):
-        checkbox = '//input [contains(@title,"' + contact_name + '")]'
+        checkbox = self.locate(contact_name)
         contact_id = wd.find_element_by_xpath(checkbox).get_attribute("id")
         edit_button = '//a[@href = "edit.php?id=' + contact_id + '"]/img'
         wd.find_element_by_xpath(edit_button).click()
@@ -90,10 +93,26 @@ class ContactHelper:
     def delete_from_home(self, contact_name):
         wd = self.ab.wd
         self.open_contact_page()
-        checkbox = '//input [contains(@title,"' + contact_name + '")]'
+        checkbox = self.locate(contact_name)
         wd.find_element_by_xpath(checkbox).click()
         wd.find_element_by_xpath('//input[@value = "Delete"]').click()
         self.open_contact_page()
+
+    def count(self):
+        wd = self.ab.wd
+        self.open_contact_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
+    def exists(self, contact_name):
+        wd = self.ab.wd
+        self.open_contact_page()
+        checkbox = self.locate(contact_name)
+        return len(wd.find_elements_by_xpath(checkbox))
+
+    def locate(self, contact_name):
+        return '//input [@name="selected[]" and contains(@title,"' + contact_name + '")]'
+
+
 
 
 
