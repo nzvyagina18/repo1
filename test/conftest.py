@@ -12,8 +12,7 @@ def a_b(request):
     else:
         if not fixture.is_valid():
             fixture = AddressBook()
-            fixture.session.ensure_login("admin", "secret")
-    fixture.session.login("admin", "secret")
+    fixture.session.ensure_login("admin", "secret")
     return fixture
 
 
