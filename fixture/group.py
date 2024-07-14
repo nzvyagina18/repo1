@@ -15,21 +15,24 @@ class GroupHelper:
         # Open Groups page
         wd = self.ab.wd
         self.open_groups_page()
-        self.create_group(wd)
-        self.populate_group_data(group, wd)
-        self.submit_form(wd)
+        self.create_group()
+        self.populate_group_data(group)
+        self.submit_form()
         # return to groups page
         self.return_to_groups_page()
 
-    def submit_form(self, wd):
+    def submit_form(self):
         # submit form
+        wd = self.ab.wd
         wd.find_element_by_name("submit").click()
 
-    def create_group(self, wd):
+    def create_group(self):
         # initiate group creation
+        wd = self.ab.wd
         wd.find_element_by_name("new").click()
 
-    def populate_group_data(self, group, wd):
+    def populate_group_data(self, group):
+        wd = self.ab.wd
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
         wd.find_element_by_name("group_name").send_keys(group.name)
@@ -59,14 +62,15 @@ class GroupHelper:
         # Open Groups page
         wd = self.ab.wd
         self.open_groups_page()
-        self.edit_group(group_name, wd)
-        self.populate_group_data(group, wd)
+        self.edit_group(group_name)
+        self.populate_group_data(group)
         # submit form
         wd.find_element_by_name("update").click()
         # return to groups page
         self.return_to_groups_page()
 
-    def edit_group(self, group_name, wd):
+    def edit_group(self, group_name):
+        wd = self.ab.wd
         self.select(group_name)
         # initiate group editing
         wd.find_element_by_name("edit").click()
