@@ -7,8 +7,8 @@ class ContactHelper:
 
     def open_contact_page(self):
         wd = self.ab.wd
-        wd.find_element_by_id("container").click()
-        wd.find_element_by_link_text("home").click()
+        if not wd.current_url.endswith("addressbook/"):
+            wd.find_element_by_link_text("home").click()
 
     def populate(self, fieldname, value):
         wd = self.ab.wd
