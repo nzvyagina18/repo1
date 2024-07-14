@@ -1,5 +1,6 @@
 from selenium.webdriver.support.ui import Select
 
+
 class ContactHelper:
     def __init__(self, ab):
         self.ab = ab
@@ -36,6 +37,7 @@ class ContactHelper:
         wd.find_element_by_link_text("add new").click()
         self.populate_contact_data(contact, contact_page)
         self.submit_form()
+        self.open_contact_page()
 
     def submit_form(self):
         # submit form
@@ -69,6 +71,7 @@ class ContactHelper:
         self.populate_contact_data(contact_new, contact_page)
         # update form
         wd.find_element_by_name("update").click()
+        self.open_contact_page()
 
     def edit_contact(self, contact_name, wd):
         checkbox = '//input [contains(@title,"' + contact_name + '")]'
@@ -82,6 +85,7 @@ class ContactHelper:
         self.edit_contact(contact_name, wd)
         # delete contact
         wd.find_element_by_xpath('//input[@value = "Delete"]').click()
+        self.open_contact_page()
 
     def delete_from_home(self, contact_name):
         wd = self.ab.wd
@@ -89,5 +93,7 @@ class ContactHelper:
         checkbox = '//input [contains(@title,"' + contact_name + '")]'
         wd.find_element_by_xpath(checkbox).click()
         wd.find_element_by_xpath('//input[@value = "Delete"]').click()
+        self.open_contact_page()
+
 
 
