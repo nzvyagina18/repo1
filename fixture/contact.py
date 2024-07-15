@@ -59,7 +59,7 @@ class ContactHelper:
         self.populate(contact_page.homephone, contact.homephone)
         self.populate(contact_page.mobilephone, contact.mobilephone)
         self.populate(contact_page.workphone, contact.workphone)
-        self.populate(contact_page.fax_, contact.fax_)
+        self.populate(contact_page.fax, contact.fax)
         self.populate(contact_page.email1, contact.email1)
         self.populate(contact_page.email2, contact.email2)
         self.populate(contact_page.email3, contact.email3)
@@ -107,8 +107,12 @@ class ContactHelper:
     def exists(self, contact_name):
         wd = self.ab.wd
         self.open_contact_page()
+        wd.implicitly_wait(2)
         checkbox = self.locate(contact_name)
-        return len(wd.find_elements_by_xpath(checkbox))
+        if len(wd.find_elements_by_xpath(checkbox))>0:
+            return True
+        else:
+            return False
 
     def locate(self, contact_name):
         return '//input [@name="selected[]" and contains(@title,"' + contact_name + '")]'
