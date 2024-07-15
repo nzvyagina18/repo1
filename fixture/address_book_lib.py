@@ -14,7 +14,7 @@ class AddressBook:
         self.wd = webdriver.Firefox(executable_path=r'geckodriver.exe',
                                     options=options)
         self.wd.implicitly_wait(1)
-        #self.wd.WebDriver()
+        #self.wd.WebDriver() #this code does not work for me
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
