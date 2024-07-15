@@ -107,7 +107,6 @@ class ContactHelper:
     def exists(self, contact_name):
         wd = self.ab.wd
         self.open_contact_page()
-        wd.implicitly_wait(2)
         checkbox = self.locate(contact_name)
         if len(wd.find_elements_by_xpath(checkbox))>0:
             return True
