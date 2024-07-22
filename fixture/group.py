@@ -1,3 +1,6 @@
+from model.group import Group
+
+
 class GroupHelper:
     def __init__(self, ab):
         self.ab = ab
@@ -91,6 +94,17 @@ class GroupHelper:
         self.open_groups_page()
         checkbox = '//input [@name="selected[]" and contains(@title,"' + group_name + '")]'
         return len(wd.find_elements_by_xpath(checkbox))
+
+    def get_group_list(self):
+        wd = self.ab.wd
+        self.open_groups_page()
+        groups = []
+        for element in wd.find_elements_by_css_selector("span.group"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            groups.append(Group(name=text, id=id))
+        return groups
+
 
 
 

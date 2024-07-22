@@ -13,7 +13,7 @@ class AddressBook:
         options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
         self.wd = webdriver.Firefox(executable_path=r'geckodriver.exe',
                                     options=options)
-        self.wd.implicitly_wait(1)
+        self.wd.implicitly_wait(10)
         #self.wd.WebDriver() #this code does not work for me
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
