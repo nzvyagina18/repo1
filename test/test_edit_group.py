@@ -2,12 +2,23 @@ from model.group import Group
 
 
 def test_edit_group(a_b):
-    if a_b.group.exists('b1') == 0:
-        a_b.group.create(Group(name = 'b1'))
+    group_to_edit = 'b6'
+    if a_b.group.exists(group_to_edit) == 0:
+        a_b.group.create(Group(name = group_to_edit))
     old_groups = a_b.group.get_group_list()
-    a_b.group.edit('b1', Group( name='b1', header="bbb1", footer="ccc1"))
+    group = Group( name=group_to_edit + '_updated')
+    for el in old_groups:
+        if el.name == group_to_edit:
+            group.id = el.id
+            break
+    a_b.group.edit(group_to_edit, group)
     new_groups = a_b.group.get_group_list()
     assert len(old_groups) == len(new_groups)
+    for el in old_groups:
+        if el.id == group.id:
+            el.name = group.name
+            break
+    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
 def test_edit_group_name(a_b):
