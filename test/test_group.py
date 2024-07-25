@@ -23,3 +23,4 @@ def test_create_empty_group(a_b):
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
+
