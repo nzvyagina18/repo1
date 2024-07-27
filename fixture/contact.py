@@ -121,18 +121,12 @@ class ContactHelper:
         wd = self.ab.wd
         self.open_contact_page()
         contacts = []
-        rows = wd.find_elements_by_css_selector("tr")
-        i = len(rows)
+        rows = wd.find_elements_by_xpath('//tr[@class = "" or @class = "odd"]')
         for element in rows:
-            #wd.find_elements_by_xpath('//tbody/tr [@class = "" or @class = "odd"]'):
-            # #wd.find_elements_by_xpath('//tr/td [@class = "center"]/input'):
-            first_name = element.find_element_by_xpath("//tr[" + str(i) + "]/td[3]").text
-            last_name = element.find_element_by_xpath("//tr[" + str(i) + "]/td[2]").text
-            id_ = element.find_element_by_xpath("//tr[" + str(i) + "]/td[1]/input").get_attribute("id")
+            first_name = element.find_element_by_xpath('.//td[3]').text
+            last_name = element.find_element_by_xpath(".//td[2]").text
+            id_ = element.find_element_by_xpath(".//td[1]/input").get_attribute("id")
             contacts.append(Contact(firstname=first_name, id=id_, lastname=last_name))
-            i = i - 1
-            if i == 1:
-                break
         return contacts
 
 
