@@ -13,7 +13,7 @@ def test_edit_group(a_b):
             break
     a_b.group.edit(group_to_edit, group)
     new_groups = a_b.group.get_group_list()
-    assert len(old_groups) == len(new_groups)
+    assert len(old_groups) == a_b.group.count()
     for el in old_groups:
         if el.id == group.id:
             el.name = group.name
@@ -27,7 +27,7 @@ def test_edit_group_name(a_b):
     old_groups = a_b.group.get_group_list()
     a_b.group.edit('b2', Group(name='a111'))
     new_groups = a_b.group.get_group_list()
-    assert len(old_groups) == len(new_groups)
+    assert len(old_groups) == a_b.group.count()
 
 
 def test_edit_group_header(a_b):
@@ -36,4 +36,4 @@ def test_edit_group_header(a_b):
     old_groups = a_b.group.get_group_list()
     a_b.group.edit('b3', Group(header="bbb1header"))
     new_groups = a_b.group.get_group_list()
-    assert len(old_groups) == len(new_groups)
+    assert len(old_groups) == a_b.group.count()

@@ -18,7 +18,7 @@ def test_create_empty_group(a_b):
     group = Group("", "", "")
     a_b.group.create(group)
     new_groups = a_b.group.get_group_list()
-    assert len(old_groups) + 1 == len(new_groups)
+    assert len(old_groups) + 1 == a_b.group.count()
     old_groups.append(group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
