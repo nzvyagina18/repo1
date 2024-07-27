@@ -11,7 +11,7 @@ def test_add_contact(a_b):
     new_contact = Contact(firstname = "test_add", lastname = "Contact1_last")
     a_b.contact.add(new_contact, ContactPage())
     new_contacts = a_b.contact.get_contact_list()
-    assert len(old_contacts) == len(new_contacts) - 1
+    assert len(old_contacts) == a_b.contact.count() - 1
     old_contacts.append(new_contact)
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
@@ -27,7 +27,7 @@ def test_edit_contact_firstname(a_b):
             break
     a_b.contact.edit(contact_to_edit, contact_data, ContactPage())
     new_contacts = a_b.contact.get_contact_list()
-    assert len(old_contacts) == len(new_contacts)
+    assert len(old_contacts) == a_b.contact.count()
     for el in old_contacts:
         if el.id == contact_data.id:
             el.firstname = contact_data.firstname
@@ -39,8 +39,8 @@ def test_edit_contact_nick(a_b):
         a_b.contact.add(Contact(firstname="test_edit_nick"), ContactPage())
     old_contacts = a_b.contact.get_contact_list()
     a_b.contact.edit('test_edit_nick', Contact( nickname="test_nick1"), ContactPage())
-    new_contacts = a_b.contact.get_contact_list()
-    assert len(old_contacts) == len(new_contacts)
+    #new_contacts = a_b.contact.get_contact_list()
+    assert len(old_contacts) == a_b.contact.count()
 
 
 def test_del_from_home(a_b):
@@ -49,7 +49,7 @@ def test_del_from_home(a_b):
     old_contacts = a_b.contact.get_contact_list()
     a_b.contact.delete_from_home('to_delete_from_home')
     new_contacts = a_b.contact.get_contact_list()
-    assert len(old_contacts) == len(new_contacts) + 1
+    assert len(old_contacts) == a_b.contact.count() + 1
     old_contacts = sorted(old_contacts, key=Contact.id_or_max)
     new_contacts = sorted(new_contacts, key=Contact.id_or_max)
     old_contacts[len(old_contacts)-1:len(old_contacts)] = []
@@ -62,7 +62,7 @@ def test_del_from_edit(a_b):
     old_contacts = a_b.contact.get_contact_list()
     a_b.contact.delete_from_edit('to_delete_from_edit')
     new_contacts = a_b.contact.get_contact_list()
-    assert len(old_contacts) == len(new_contacts) + 1
+    assert len(old_contacts) == a_b.contact.count() + 1
     old_contacts = sorted(old_contacts, key=Contact.id_or_max)
     new_contacts = sorted(new_contacts, key=Contact.id_or_max)
     old_contacts[len(old_contacts) - 1:len(old_contacts)] = []

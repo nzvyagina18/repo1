@@ -42,6 +42,7 @@ class ContactHelper:
         self.populate_contact_data(contact, contact_page)
         self.submit_form()
         self.open_contact_page()
+        self.contact_cache = None
 
     def submit_form(self):
         # submit form
@@ -76,6 +77,7 @@ class ContactHelper:
         # update form
         wd.find_element_by_name("update").click()
         self.open_contact_page()
+        self.contact_cache = None
 
     def edit_contact(self, contact_name):
         wd = self.ab.wd
@@ -91,6 +93,7 @@ class ContactHelper:
         # delete contact
         wd.find_element_by_xpath('//input[@value = "Delete"]').click()
         self.open_contact_page()
+        self.contact_cache = None
 
     def delete_from_home(self, contact_name):
         wd = self.ab.wd
@@ -99,6 +102,7 @@ class ContactHelper:
         wd.find_element_by_xpath(checkbox).click()
         wd.find_element_by_xpath('//input[@value = "Delete"]').click()
         self.open_contact_page()
+        self.contact_cache = None
 
     def count(self):
         wd = self.ab.wd
@@ -117,17 +121,20 @@ class ContactHelper:
     def locate(self, contact_name):
         return '//input [@name="selected[]" and contains(@title,"' + contact_name + '")]'
 
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.ab.wd
-        self.open_contact_page()
-        contacts = []
-        rows = wd.find_elements_by_xpath('//tr[@class = "" or @class = "odd"]')
-        for element in rows:
-            first_name = element.find_element_by_xpath('.//td[3]').text
-            last_name = element.find_element_by_xpath(".//td[2]").text
-            id_ = element.find_element_by_xpath(".//td[1]/input").get_attribute("id")
-            contacts.append(Contact(firstname=first_name, id=id_, lastname=last_name))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.ab.wd
+            self.open_contact_page()
+            self.contact_cache = []
+            rows = wd.find_elements_by_xpath('//tr[@class = "" or @class = "odd"]')
+            for element in rows:
+                first_name = element.find_element_by_xpath('.//td[3]').text
+                last_name = element.find_element_by_xpath(".//td[2]").text
+                id_ = element.find_element_by_xpath(".//td[1]/input").get_attribute("id")
+                self.contact_cache.append(Contact(firstname=first_name, id=id_, lastname=last_name))
+        return list(self.contact_cache)
 
 
 
