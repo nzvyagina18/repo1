@@ -102,9 +102,32 @@ class ContactHelper:
 
     def edit_contact_by_index(self, index):
         wd = self.ab.wd
-        contact_row = wd.find_elements_by_xpath('//tr[@class = "" or @class = "odd"]')[index]
+        self.open_contact_page()
+        contact_row = wd.find_elements_by_xpath('//tr[@name = "entry"]')[index]
         #click Edit button
         contact_row.find_element_by_xpath(".//td[8]").click()
+
+    def view_contact_by_index(self, index):
+        wd = self.ab.wd
+        self.open_contact_page()
+        contact_row = wd.find_elements_by_xpath('//tr[@name = "entry"]')[index]
+        #click Edit button
+        contact_row.find_element_by_xpath(".//td[7]").click()
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.ab.wd
+        self.edit_contact_by_index(index)
+        firstname = wd.find_element_by_name("firstname").get_attribute("value")
+        lastname = wd.find_element_by_name("lastname").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        homephone = wd.find_element_by_name("home").get_attribute("value")
+        workphone = wd.find_element_by_name("work").get_attribute("value")
+        mobilephone = wd.find_element_by_name("mobile").get_attribute("value")
+        fax = wd.find_element_by_name("fax").get_attribute("value")
+        return Contact(firstname= firstname, lastname= lastname, id = id,
+                       homephone=homephone, mobilephone=mobilephone, workphone=workphone)
+
+
 
     def delete_from_edit(self, contact_name):
         wd = self.ab.wd
@@ -177,12 +200,17 @@ class ContactHelper:
             wd = self.ab.wd
             self.open_contact_page()
             self.contact_cache = []
-            rows = wd.find_elements_by_xpath('//tr[@class = "" or @class = "odd"]')
+            rows = wd.find_elements_by_xpath('//tr[@name = "entry"]')
             for element in rows:
                 first_name = element.find_element_by_xpath('.//td[3]').text
                 last_name = element.find_element_by_xpath(".//td[2]").text
-                id_ = element.find_element_by_xpath(".//td[1]/input").get_attribute("id")
-                self.contact_cache.append(Contact(firstname=first_name, id=id_, lastname=last_name))
+                id = element.find_element_by_xpath(".//td[1]/input").get_attribute("id")
+                all_phones = element.find_element_by_xpath(".//td[6]").text.splitlines()
+                if len(all_phones) == 0:
+                    all_phones = ['', '', '']
+                self.contact_cache.append(Contact(firstname=first_name, id=id, lastname=last_name,
+                                                  homephone=all_phones[0], mobilephone=all_phones[1],
+                                                  workphone=all_phones[2]))
         return list(self.contact_cache)
 
 
