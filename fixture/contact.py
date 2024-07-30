@@ -79,6 +79,20 @@ class ContactHelper:
         self.open_contact_page()
         self.contact_cache = None
 
+    def edit_by_index(self, index, contact_new, contact_page):
+        wd = self.ab.wd
+        self.open_contact_page()
+        self.edit_contact_by_index(index)
+        self.populate_contact_data(contact_new, contact_page)
+        # update form
+        wd.find_element_by_name("update").click()
+        self.open_contact_page()
+        self.contact_cache = None
+
+
+    def locate(self, contact_name):
+        return '//input [@name="selected[]" and contains(@title,"' + contact_name + '")]'
+
     def edit_contact(self, contact_name):
         wd = self.ab.wd
         checkbox = self.locate(contact_name)
@@ -86,12 +100,32 @@ class ContactHelper:
         edit_button = '//a[@href = "edit.php?id=' + contact_id + '"]/img'
         wd.find_element_by_xpath(edit_button).click()
 
+    def edit_contact_by_index(self, index):
+        wd = self.ab.wd
+        contact_row = wd.find_elements_by_xpath('//tr[@class = "" or @class = "odd"]')[index]
+        #click Edit button
+        contact_row.find_element_by_xpath(".//td[8]").click()
+
     def delete_from_edit(self, contact_name):
         wd = self.ab.wd
         self.open_contact_page()
         self.edit_contact(contact_name)
         # delete contact
+        self.delete_contact()
+        self.open_contact_page()
+        self.contact_cache = None
+
+    def delete_contact(self):
+        wd = self.ab.wd
         wd.find_element_by_xpath('//input[@value = "Delete"]').click()
+
+    def delete_by_index_from_edit(self, index):
+        wd = self.ab.wd
+        self.open_contact_page()
+        contact_row = wd.find_elements_by_xpath('//tr[@name = "entry"]')[index]
+        # click Edit button
+        contact_row.find_element_by_xpath(".//td[8]").click()
+        self.delete_contact()
         self.open_contact_page()
         self.contact_cache = None
 
@@ -100,7 +134,17 @@ class ContactHelper:
         self.open_contact_page()
         checkbox = self.locate(contact_name)
         wd.find_element_by_xpath(checkbox).click()
-        wd.find_element_by_xpath('//input[@value = "Delete"]').click()
+        self.delete_contact()
+        self.open_contact_page()
+        self.contact_cache = None
+
+    def delete_by_index_from_home(self, index):
+        wd = self.ab.wd
+        self.open_contact_page()
+        contact_row = wd.find_elements_by_xpath('//tr[@name = "entry"]')[index]
+        # select row
+        contact_row.find_element_by_xpath(".//td[1]").click()
+        self.delete_contact()
         self.open_contact_page()
         self.contact_cache = None
 
@@ -118,8 +162,13 @@ class ContactHelper:
         else:
             return False
 
-    def locate(self, contact_name):
-        return '//input [@name="selected[]" and contains(@title,"' + contact_name + '")]'
+    def exists_any(self):
+        wd = self.ab.wd
+        self.open_contact_page()
+        if len(wd.find_elements_by_xpath('//input [@name="selected[]"]'))>0:
+            return True
+        else:
+            return False
 
     contact_cache = None
 

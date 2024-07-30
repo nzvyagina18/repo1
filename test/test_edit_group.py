@@ -1,4 +1,5 @@
 from model.group import Group
+from random import randrange
 
 
 def test_edit_group(a_b):
@@ -18,6 +19,20 @@ def test_edit_group(a_b):
         if el.id == group.id:
             el.name = group.name
             break
+    assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
+
+
+def test_edit_some_group(a_b):
+    if a_b.group.exists('test') == 0:
+        a_b.group.create(Group(name = 'test'))
+    old_groups = a_b.group.get_group_list()
+    index = randrange(len(old_groups))
+    group = Group( name='newly_updated')
+    group.id = old_groups[index].id
+    a_b.group.edit_by_index(index, group)
+    new_groups = a_b.group.get_group_list()
+    assert len(old_groups) == a_b.group.count()
+    old_groups[index] = group
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 
