@@ -4,27 +4,11 @@ from model.contact_page import ContactPage
 from model.contact_date import ContactDate
 from random import randrange
 import pytest
-import random
-import string
 
 
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + " "*10# + string.punctuation
-    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
-
-
-def random_phone(maxlen):
-    symbols = string.digits # + string.punctuation + " "
-    return "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
-
-
-testdata = [Contact(firstname = random_string("first", 10), lastname = random_string("last", 10), homephone= random_phone(10))
-            for i in range(5)
-            ]
-@pytest.mark.parametrize("new_contact", testdata, ids=[repr(x) for x in testdata])
-def test_add_contact(a_b, new_contact):
+def test_add_contact(a_b, json_contacts):
+    new_contact = json_contacts
     old_contacts = a_b.contact.get_contact_list()
-    #new_contact = Contact(firstname = "test_add", lastname = "Contact1_last")
     a_b.contact.add(new_contact, ContactPage())
     new_contacts = a_b.contact.get_contact_list()
     assert len(old_contacts) == a_b.contact.count() - 1
