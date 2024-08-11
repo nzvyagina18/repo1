@@ -101,6 +101,10 @@ class ContactHelper:
         edit_button = '//a[@href = "edit.php?id=' + contact_id + '"]/img'
         wd.find_element_by_xpath(edit_button).click()
 
+    def edit_contact_by_id(self, id):
+        wd = self.ab.wd
+        wd.find_element_by_css_selector('a[href="edit.php?id=%s"]' % id).click()
+
     def edit_contact_by_index(self, index):
         wd = self.ab.wd
         self.open_contact_page()
@@ -145,8 +149,6 @@ class ContactHelper:
 
 
 
-
-
     def delete_from_edit(self, contact_name):
         wd = self.ab.wd
         self.open_contact_page()
@@ -170,6 +172,16 @@ class ContactHelper:
         self.open_contact_page()
         self.contact_cache = None
 
+    def delete_by_id_from_edit(self, id):
+        wd = self.ab.wd
+        self.open_contact_page()
+        self.edit_contact_by_id(id)
+        self.delete_contact()
+        self.open_contact_page()
+        self.contact_cache = None
+
+
+
     def delete_from_home(self, contact_name):
         wd = self.ab.wd
         self.open_contact_page()
@@ -188,6 +200,22 @@ class ContactHelper:
         self.delete_contact()
         self.open_contact_page()
         self.contact_cache = None
+
+    def delete_by_id_from_home(self, id):
+        wd = self.ab.wd
+        self.open_contact_page()
+        self.select_by_id(id)
+        self.delete_contact()
+        self.open_contact_page()
+        self.contact_cache = None
+
+    def select_by_id(self, id):
+        wd = self.ab.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
+    def select_by_id_and_edit(self, id):
+        wd = self.ab.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
 
     def count(self):
         wd = self.ab.wd

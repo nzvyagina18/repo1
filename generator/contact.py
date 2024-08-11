@@ -30,7 +30,10 @@ def random_phone(maxlen):
     return "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
-testdata = [Contact(firstname = random_string("first", 10), lastname = random_string("last", 10), homephone= random_phone(10))
+testdata = [Contact(firstname=random_string("first", 10),
+                    lastname=random_string("last", 10),
+                    homephone=random_phone(10),
+                    address=random_string("add: ", 15))
             for i in range(5)
             ]
 
