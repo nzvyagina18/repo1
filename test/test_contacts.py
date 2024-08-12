@@ -20,9 +20,9 @@ def test_add_contact(a_b, db, json_contacts, check_ui):
 
 
 def test_edit_contact_firstname(a_b, db, check_ui):
-    contact_to_edit = 'test_edit'
+    contact_to_edit = 'test_edit3'
     if not a_b.contact.exists(contact_to_edit):
-        a_b.contact.add(Contact(firstname="test_edit"), ContactPage())
+        a_b.contact.add(Contact(firstname=contact_to_edit), ContactPage())
     old_contacts = db.get_contact_list()
     contact_data = Contact(firstname = contact_to_edit + '_updated')
     for el in old_contacts:
