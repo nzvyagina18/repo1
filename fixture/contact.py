@@ -90,6 +90,16 @@ class ContactHelper:
         self.open_contact_page()
         self.contact_cache = None
 
+    def edit_by_id(self, id, contact_new, contact_page):
+        wd = self.ab.wd
+        self.open_contact_page()
+        self.edit_contact_by_id(id)
+        self.populate_contact_data(contact_new, contact_page)
+        # update form
+        wd.find_element_by_name("update").click()
+        self.open_contact_page()
+        self.contact_cache = None
+
 
     def locate(self, contact_name):
         return '//input [@name="selected[]" and contains(@title,"' + contact_name + '")]'

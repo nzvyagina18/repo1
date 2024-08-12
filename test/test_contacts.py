@@ -44,13 +44,12 @@ def test_edit_some_contact(a_b, db, check_ui):
     if len(db.get_contact_list()) == 0:
         a_b.contact.add(Contact(firstname="test"), ContactPage())
     old_contacts = db.get_contact_list()
-    index = randrange(len(old_contacts))
+    contact = random.choice(old_contacts)
     contact_data = Contact(firstname='test_updated')
-    contact_data.id = old_contacts[index].id
-    a_b.contact.edit_by_index(index, contact_data, ContactPage())
+    a_b.contact.edit_by_id(contact.id, contact_data, ContactPage())
     new_contacts = db.get_contact_list()
     for el in old_contacts:
-        if el.id == contact_data.id:
+        if el.id == contact.id:
             el.firstname = contact_data.firstname
             break
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
