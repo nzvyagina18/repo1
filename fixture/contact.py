@@ -268,6 +268,26 @@ class ContactHelper:
                                                   all_phones_from_home_page=all_phones, all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
 
+    def add_to_group(self,id,group_id):
+        wd = self.ab.wd
+        self.open_contact_page()
+        self.select_by_id(id)
+        self.select_group_to_add(group_id)
+        self.open_contact_page()
+
+    def select_group_to_add(self, group_id):
+        wd = self.ab.wd
+        wd.find_element_by_xpath("//select[@name='to_group']/option[@value='%s']" % group_id).click()
+        wd.find_element_by_xpath("//input[@type='submit' and @value='Add to']").click()
+
+    def remove_from_group(self, contact_id, group_id):
+        wd = self.ab.wd
+        wd.find_element_by_xpath("//select[@name='group']/option[@value='%s']" % group_id).click()
+        self.select_by_id(contact_id)
+        wd.find_element_by_xpath("//input[@type='submit' and @name='Remove']").click()
+
+
+
 
 
 

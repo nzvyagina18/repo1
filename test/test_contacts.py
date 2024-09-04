@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
 from model.contact_page import ContactPage
-from model.contact_date import ContactDate
-from random import randrange
 import random
-import pytest
 
 
 def test_add_contact(a_b, db, json_contacts, check_ui):
@@ -123,6 +120,7 @@ def test_compare_contact_list_ORM(a_b, orm):
     ui_list = sorted(a_b.contact.get_contact_list(), key=Contact.id_or_max)
     orm_list = sorted(orm.get_contact_list(), key=Contact.id_or_max)
     assert ui_list == orm_list
+
 
 
 

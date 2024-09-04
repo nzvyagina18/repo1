@@ -44,8 +44,10 @@ def orm(request):
     db_config = load_config(request.config.getoption("--target"))["db"]
     #db = ORMFixture(host='127.0.0.1', name='addressbook', user='root', password='')
     ormfixture = ORMFixture(host=db_config["host"], name=db_config["name"], user=db_config["user"], password=db_config["password"])
+
     def fin():
-        ormfixture.destroy()
+        pass
+        #ormfixture.destroy()
     request.addfinalizer(fin)
     return ormfixture
 
