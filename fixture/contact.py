@@ -284,7 +284,7 @@ class ContactHelper:
         wd = self.ab.wd
         wd.find_element_by_xpath("//select[@name='group']/option[@value='%s']" % group_id).click()
         self.select_by_id(contact_id)
-        wd.find_element_by_xpath("//input[@type='submit' and @name='Remove']").click()
+        wd.find_element_by_xpath("//input[@type='submit' and @name='remove']").click()
 
 
 
