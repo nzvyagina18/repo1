@@ -1,6 +1,8 @@
 from pony.orm import *
 from model.group import Group
 from model.contact import Contact
+import re
+
 
 class ORMFixture:
 
@@ -19,6 +21,12 @@ class ORMFixture:
         firstname = Optional(str, column='firstname')
         lastname = Optional(str, column='lastname')
         address = Optional(str, column= 'address')
+        email1 = Optional(str, column='email')
+        email2 = Optional(str, column='email2')
+        email3 = Optional(str, column='email3')
+        home_phone = Optional(str, column='home')
+        mobile_phone = Optional(str, column='mobile')
+        work_phone = Optional(str, column='work')
 
     class ORMContactGroup(db.Entity):
         _table_ = 'address_in_groups'
@@ -39,9 +47,21 @@ class ORMFixture:
     def get_group_list(self):
         return self.convert_groups_to_model(select(g for g in ORMFixture.ORMGroup))
 
+    def clear(self, s):
+        return re.sub("[() -]", "", s)
+
+    def merge_phones_like_on_home(self, contact):
+        return "\n".join(filter(lambda x: x != "",
+                         map(lambda x: self.clear(x), [contact.home_phone, contact.mobile_phone, contact.work_phone])))
+
+    def merge_emails_like_on_home(self, contact):
+        return "\n".join(filter(lambda x: x != "", [contact.email1, contact.email2, contact.email3]))
+
     def convert_contacts_to_model(self, contacts):
         def convert(contact):
-            return Contact(id=str(contact.id), firstname=contact.firstname, lastname=contact.lastname, address=contact.address)
+            return Contact(id=str(contact.id), firstname=contact.firstname, lastname=contact.lastname, address=contact.address,
+                           all_emails_from_home_page=self.merge_emails_like_on_home(contact),
+                           all_phones_from_home_page=self.merge_phones_like_on_home(contact))
         return list(map(convert, contacts))
 
     @db_session
@@ -51,7 +71,6 @@ class ORMFixture:
     def convert_contact_group_to_list(self, contact_groups):
         l = list()
         for i in contact_groups:
-            #l.append(str(i.id) + ':'+str(i.group_id))
             l.append((i.id,i.group_id))
         return l
     @db_session

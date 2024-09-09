@@ -116,10 +116,12 @@ def test_del_some_from_edit(a_b, db, check_ui):
         assert sorted(new_contacts, key=Contact.id_or_max) == sorted(a_b.contact.get_contact_list(),
                                                                      key=Contact.id_or_max)
 
-def test_compare_contact_list_ORM(a_b, orm):
+
+def test_compare_contact_list_orm(a_b, orm):
     ui_list = sorted(a_b.contact.get_contact_list(), key=Contact.id_or_max)
     orm_list = sorted(orm.get_contact_list(), key=Contact.id_or_max)
     assert ui_list == orm_list
+
 
 
 

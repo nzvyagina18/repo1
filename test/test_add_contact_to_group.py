@@ -5,9 +5,9 @@ import random
 
 def test_add_to_group(a_b, orm):
     if len(orm.get_contact_list()) == 0:
-        a_b.contact.add(Contact(firstname="to_delete_from_edit"), ContactPage())
+        a_b.contact.add(Contact(firstname="contact_fn"), ContactPage())
     if len(orm.get_group_list()) == 0:
-        a_b.group.create('container')
+        a_b.group.create(Group("container"))
     contact_id = random.choice(orm.get_contact_list()).id
     group_id = random.choice(orm.get_group_list()).id
     if orm.contact_exists_in_group(contact_id, group_id):
