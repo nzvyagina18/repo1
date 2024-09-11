@@ -11,6 +11,8 @@ class ContactHelper:
         wd = self.ab.wd
         if not wd.current_url.endswith("addressbook/"):
             wd.find_element_by_link_text("home").click()
+            wd.find_element_by_xpath("//select[@name='group']/option[@value='']").click()
+
 
     def populate(self, fieldname, value):
         wd = self.ab.wd
@@ -285,6 +287,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//select[@name='group']/option[@value='%s']" % group_id).click()
         self.select_by_id(contact_id)
         wd.find_element_by_xpath("//input[@type='submit' and @name='remove']").click()
+        self.open_contact_page()
 
 
 
