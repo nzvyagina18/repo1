@@ -8,6 +8,7 @@ Scenario Outline: Add new group
     | name | header | footer |
     | name1| header1| footer1|
     | name2| header2| footer2|
+    | name3| header3| footer3|
 
 Scenario: Delete a group
     Given a non-empty group list

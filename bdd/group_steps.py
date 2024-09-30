@@ -1,12 +1,12 @@
-from pytest_bdd import given, when, then
+from pytest_bdd import given, when, then, parsers
 from model.group import Group
 import random
 
-@given('a group list')
+@given('a group list', target_fixture="group_list")
 def group_list(db):
     return db.get_group_list()
 
-@given('a group with <name>, <header>, <footer>')
+@given(parsers.parse('a group with {name}, {header}, {footer}'), target_fixture="new_group")
 def new_group(name, header, footer):
     return Group(name, header, footer)
 
@@ -21,13 +21,14 @@ def verify_group_list(db, group_list, new_group):
     old_groups.append(new_group)
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
-@given('a non-empty group list')
+#target_fixture="non_empty_group_list"
+@given('a non-empty group list', target_fixture="non_empty_group_list")
 def non_empty_group_list(db, a_b):
     if len(db.get_group_list()) == 0:
         a_b.group.create(Group(name='some name'))
     return db.get_group_list()
 
-@given('a random group from the list')
+@given('a random group from the list', target_fixture="random_group")
 def random_group(non_empty_group_list):
     return random.choice(non_empty_group_list)
 
